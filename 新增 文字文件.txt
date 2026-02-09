@@ -1,0 +1,6 @@
+cd ~/.openclaw
+git init
+git add .
+git commit -m "initial commit: OpenClaw ARM setup"
+git remote add origin https://github.com/inchinet/openclaw.git
+git push -u origin main

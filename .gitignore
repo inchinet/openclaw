@@ -1,0 +1,22 @@
+# Secrets and Environment
+.env
+openclaw.env
+auth-profiles.json
+models.json
+*.env
+
+# OpenClaw runtime data
+sessions/
+log/
+workspace/
+.openclaw/
+
+# System and logs
+*.log
+*.png
+*.jpg
+issue.txt
+
+# Node.js
+node_modules/
+npm-debug.log
