@@ -289,8 +289,9 @@ One for openclaw-gateway
 ```bash
 openclaw status                                         #show openclaw status
 openclaw models status                                  #show model    status
-openclaw models list                                    #make sure the models are Auth with 'yes'
 sudo journalctl -u openclaw.service -n 20 --no-pager    #check error log
+
+openclaw models list                                    #make sure the models are Auth with 'yes'
 ```
 Mine:
 ```ini
