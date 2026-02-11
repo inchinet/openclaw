@@ -135,7 +135,6 @@ ps aux | grep ollama
 
 ### 7. The openclaw.json configuration (for Google Gemini/Nvidia/Openrouter/Ollama LLMs)
 Without a GPU, avoid large models for Ollama (local LLM)
-- **Recommended**: `qwen2:0.5b` (352MB) - Fast responses on CPU.
 - **Max Weight**: `gemma2:2b` (1.6GB) - Slower but manageable.
 - **Delete Heavy Models**: `ollama rm llama3.1:8b mistral:7b` (Prevents 400% CPU spikes).
 - **API key**: except Ollama, you need apply/buy all API keys from individual LLM supplier.
