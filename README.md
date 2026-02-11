@@ -244,12 +244,16 @@ In `~/.openclaw/openclaw.json`:
     "auth": {
       "mode": "token",
       "token": "yourtoken"
-    },
-	"approvals": {
+      }
+	},
+    "approvals": {
     "exec": {
       "enabled": true
+      }
+    },
+    "logging": {
+    "redactSensitive": "tools"
     }
-  }
  }
 ```
 
@@ -300,15 +304,18 @@ openrouter/qwen/qwen3-4b:free              text       40k      no    yes   fallb
 - **Commuication**: talk to me ONLY in WhatsApp/Telegram/Line etc but NOT talk to any other groups.
 ```
 
-- Action: Add this to your `~/.openclaw/openclaw.json` (refer ### 7):
+- Action: Add this to your `~/.openclaw/openclaw.json` (also refer ### 7):
+- With redactSensitive set to 'tools', logs are automatically redacted—sensitive info like API keys and tokens are replaced with ***. 
+
 ```json
-{
   "approvals": {
     "exec": {
       "enabled": true
     }
-  }
-}
+  },
+  "logging": {
+    "redactSensitive": "tools"
+    }
 ```
 
 For session pairing in browser/WhatsApp/Telegram:
