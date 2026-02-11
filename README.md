@@ -111,8 +111,10 @@ Proxy traffic through Apache to match `https://your-url`.
 
 ## 6. Models & ARM Optimization
 Running local Models on ARM CPUs requires care. 
-Ollama setup refer https://docs.openclaw.ai/providers/ollama
-local LLM consideration: https://blog.darkthread.net/blog/openclaw-w-local-llm/
+
+- Ollama setup refer https://docs.openclaw.ai/providers/ollama
+- local LLM consideration: https://blog.darkthread.net/blog/openclaw-w-local-llm/
+
 
 install Ollama
 ```bash
@@ -135,8 +137,8 @@ ps aux | grep ollama
 
 ### 7. The openclaw.json configuration (for Google Gemini/Nvidia/Openrouter/Ollama LLMs)
 Without a GPU, avoid large models for Ollama (local LLM)
-- **Max Weight**: `gemma2:2b` (1.6GB) - Slower but manageable.
-- **Delete Heavy Models**: `ollama rm llama3.1:8b mistral:7b` (Prevents 400% CPU spikes).
+- **Light Weight**: `gemma2:2b` (1.6GB) - Slower but manageable.
+- **Delete Heavy/Error Models**: `ollama rm llama3.1:8b mistral:7b qwen2:0.5b` (Prevents 400% CPU spikes).
 - **API key**: except Ollama, you need apply/buy all API keys from individual LLM supplier.
 
 In `~/.openclaw/openclaw.json`:
@@ -298,7 +300,7 @@ openrouter/qwen/qwen3-4b:free              text       40k      no    yes   fallb
 - **Commuication**: talk to me ONLY in WhatsApp/Telegram/Line etc but NOT talk to any other groups.
 ```
 
-- Action: Add this to your openclaw.json (refer ### 7):
+- Action: Add this to your `~/.openclaw/openclaw.json` (refer ### 7):
 ```json
 {
   "approvals": {
@@ -315,11 +317,11 @@ openclaw devices list
 openclaw devices approve <DEVICE_ID> (pending one)
 ```
 
-Access on web via token
+- Access on web via token
 https://your-url?token=yourtoken
 
 
-To monitor and prevent internet attack, please refer:
+- To monitor and prevent internet attack, please refer:
 https://github.com/inchinet/attack
 
 ---
