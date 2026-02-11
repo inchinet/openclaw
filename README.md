@@ -324,7 +324,7 @@ openclaw devices list
 openclaw devices approve <DEVICE_ID> (pending one)
 ```
 
-- Access on web via token
+- Access on web via token (modify `yourtoken` to a strong, randomly generated value)
 https://your-url?token=yourtoken
 
 
