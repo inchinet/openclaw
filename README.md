@@ -120,10 +120,12 @@ curl -fsSL https://ollama.com/install.sh | sh
 ```
 download and run a model
 ```bash
-ollama run qwen2:0.5b
+ollama run qwen2:0.5b   
 ollama run gemma2:2b
 
 ollama list   # to see models installed
+
+ollama rm qwen2:0.5b  #removed, get 400 error 'do not support tool'
 ```
 check if API is accessible and ollama is running:
 ```bash
@@ -185,25 +187,9 @@ In `~/.openclaw/openclaw.json`:
       },
       "ollama": {
         "baseUrl": "http://127.0.0.1:11434/v1",
-	"apiKey": "ollama-local",
+	    "apiKey": "ollama-local",
         "api": "openai-completions",
         "models": [
-          {
-            "id": "qwen2:0.5b",
-            "name": "qwen2:0.5b",
-            "input": [
-              "text"
-            ],
-            "contextWindow": 32768,
-            "maxTokens": 81920,
-            "reasoning": false,
-            "cost": {
-              "input": 0,
-              "output": 0,
-              "cacheRead": 0,
-              "cacheWrite": 0
-            }
-          },
           {
             "id": "gemma2:2b",
             "name": "gemma2:2b",
@@ -231,17 +217,17 @@ In `~/.openclaw/openclaw.json`:
         "fallbacks": [
           "nvidia/moonshotai/kimi-k2.5",
           "openrouter/moonshotai/kimi-k2.5",
-          "openrouter/qwen/qwen3-4b:free",
-          "ollama/qwen2:0.5b",
-		  "ollama/gemma2:2b"
+  		  "ollama/gemma2:2b",
+		  "openrouter/openrouter/auto",
+          "openrouter/qwen/qwen3-4b:free"
         ]
       },
       "models": {
-        "google/gemini-2.5-flash": {},
+		"google/gemini-2.5-flash": {},
         "nvidia/moonshotai/kimi-k2.5": {},
         "openrouter/moonshotai/kimi-k2.5": {},
+		"openrouter/openrouter/auto": {},
         "openrouter/qwen/qwen3-4b:free": {},
-        "ollama/qwen2:0.5b": {},
 		"ollama/gemma2:2b": {}
       },
       "maxConcurrent": 1,
@@ -299,9 +285,9 @@ Model                                      Input      Ctx      Local Auth  Tags
 google/gemini-2.5-flash                    text+image 1024k    no    yes   default,configured
 nvidia/moonshotai/kimi-k2.5                text       250k     no    yes   fallback#1,configured
 openrouter/moonshotai/kimi-k2.5            text+image 256k     no    yes   fallback#2,configured
-openrouter/qwen/qwen3-4b:free              text       40k      no    yes   fallback#3,configured
-ollama/qwen2:0.5b                          text       32k      yes   yes   fallback#4,configured
-ollama/gemma2:2b                           text       8k       yes   yes   fallback#5,configured
+ollama/gemma2:2b                           text       8k       yes   yes   fallback#3,configured
+openrouter/openrouter/auto                 text+image 1953k    no    yes   fallback#4,configured
+openrouter/qwen/qwen3-4b:free              text       40k      no    yes   fallback#5,configured
 ```
 
 ### 9. Security Policies
