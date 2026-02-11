@@ -214,24 +214,24 @@ In `~/.openclaw/openclaw.json`:
       "model": {
         "primary": "google/gemini-2.5-flash",
         "fallbacks": [
+	      "openrouter/z-ai/glm-4.5-air:free",
           "nvidia/moonshotai/kimi-k2.5",
           "openrouter/moonshotai/kimi-k2.5",
   		  "ollama/gemma2:2b",
-		  "openrouter/openrouter/auto",
           "openrouter/qwen/qwen3-4b:free"
         ]
       },
       "models": {
 		"google/gemini-2.5-flash": {},
+	    "openrouter/z-ai/glm-4.5-air:free": {},
         "nvidia/moonshotai/kimi-k2.5": {},
         "openrouter/moonshotai/kimi-k2.5": {},
-		"openrouter/openrouter/auto": {},
-        "openrouter/qwen/qwen3-4b:free": {},
-		"ollama/gemma2:2b": {}
+		"ollama/gemma2:2b": {},
+        "openrouter/qwen/qwen3-4b:free": {}
       },
       "maxConcurrent": 1,
       "subagents": {
-        "maxConcurrent": 1
+      "maxConcurrent": 1
       }
     }
   },
@@ -282,10 +282,10 @@ Mine:
 ```ini
 Model                                      Input      Ctx      Local Auth  Tags
 google/gemini-2.5-flash                    text+image 1024k    no    yes   default,configured
-nvidia/moonshotai/kimi-k2.5                text       250k     no    yes   fallback#1,configured
-openrouter/moonshotai/kimi-k2.5            text+image 256k     no    yes   fallback#2,configured
-ollama/gemma2:2b                           text       8k       yes   yes   fallback#3,configured
-openrouter/openrouter/auto                 text+image 1953k    no    yes   fallback#4,configured
+openrouter/z-ai/glm-4.5-air:free           text       128k     no    yes   fallback#1,configured
+nvidia/moonshotai/kimi-k2.5                text       250k     no    yes   fallback#2,configured
+openrouter/moonshotai/kimi-k2.5            text+image 256k     no    yes   fallback#3,configured
+ollama/gemma2:2b                           text       8k       yes   yes   fallback#4,configured
 openrouter/qwen/qwen3-4b:free              text       40k      no    yes   fallback#5,configured
 ```
 
