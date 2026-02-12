@@ -23,7 +23,7 @@ openclaw onboard    # to configure
 ```
 
 ## 3. Run as a Service (Systemd)
-Create a service file to handle background execution and API key injection (note: 'type':'api_key').
+Create a service file to handle background execution and API key injection (note: 'type':'api_key' is needed).
 `sudo nano /etc/systemd/system/openclaw.service`
 
 ```ini
@@ -52,9 +52,9 @@ GOOGLE_API_KEY=your_actual_key
 ```
 
 ### B. Shell Access 
-If your `openclaw.json` uses placeholders like `${NVIDIA_API_KEY}` etc, and add them to `~\.openclaw\.env`
+If your `openclaw.json` uses placeholders like `${NVIDIA_API_KEY}` etc, and add them to `~/.openclaw/.env`
 ```bash
-touch ~\.openclaw\.env
+touch ~/.openclaw/.env
 ```
 
 ```ini
@@ -400,4 +400,5 @@ openclaw models list
 
 ##  License
 MIT License - Developed by [inchinet](https://github.com/inchinet). 
+
 
