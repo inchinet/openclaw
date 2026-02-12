@@ -164,7 +164,7 @@ In `~/.openclaw/openclaw.json`:
 	  "deepseek:default": {
         "provider": "deepseek",
         "mode": "api_key"
-      },
+      }
     }
   },
   "models": {
@@ -385,3 +385,4 @@ https://github.com/inchinet/attack
 
 ##  License
 MIT License - Developed by [inchinet](https://github.com/inchinet). 
+
