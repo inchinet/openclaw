@@ -354,7 +354,7 @@ openrouter/qwen/qwen3-4b:free              text       40k      no    yes   fallb
 - **Commuication**: talk to me ONLY in WhatsApp/Telegram/Line etc but NOT talk to any other groups.
 ```
 
-- Action: Add this to your `~/.openclaw/openclaw.json` (also refer ### 7):
+- Action: Add this to your `~/.openclaw/openclaw.json` (also refer step 7):
 - With redactSensitive set to 'tools', logs are automatically redacted—sensitive info like API keys and tokens are replaced with ***. 
 
 ```json
@@ -380,6 +380,17 @@ https://your-url?token=yourtoken
 
 - To monitor and prevent internet attack, please refer:
 https://github.com/inchinet/attack
+
+
+### 9. openclaw update
+To update openclaw to latest 
+```bash
+sudo systemctl stop openclaw
+sudo npm i -g openclaw@latest
+sudo systemctl restart openclaw
+openclaw models list
+```
+
 
 ---
 **Note:** Always verify your outbound IPv4 with `curl ifconfig.me` and ensure it matches your Google Cloud API whitelist.
