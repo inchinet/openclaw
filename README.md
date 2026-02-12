@@ -23,7 +23,7 @@ openclaw onboard    # to configure
 ```
 
 ## 3. Run as a Service (Systemd)
-Create a service file to handle background execution and API key injection:
+Create a service file to handle background execution and API key injection (note: 'type':'api_key').
 `sudo nano /etc/systemd/system/openclaw.service`
 
 ```ini
@@ -52,7 +52,7 @@ GOOGLE_API_KEY=your_actual_key
 ```
 
 ### B. Shell Access 
-If your `openclaw.json` uses placeholders like `${NVIDIA_API_KEY}` etc, and add them to ~\.openclaw\.env
+If your `openclaw.json` uses placeholders like `${NVIDIA_API_KEY}` etc, and add them to `~\.openclaw\.env`
 ```bash
 touch ~\.openclaw\.env
 ```
@@ -77,6 +77,7 @@ sudo chmod 640 /etc/systemd/system/openclaw.service
 
 # Agent auth profile
 chmod 600 ~/.openclaw/agents/main/agent/auth-profiles.json
+chmod 600 ~/.openclaw/agents/main/agent/models.json
 ```
 
 ### C. Fail2ban Integration
@@ -149,7 +150,7 @@ In `~/.openclaw/openclaw.json`:
 {
   "auth": {
     "profiles": {
-	  "nvidia:default": {
+      "nvidia:default": {
         "provider": "nvidia",
         "mode": "api_key"
       },
@@ -161,7 +162,7 @@ In `~/.openclaw/openclaw.json`:
         "provider": "openrouter",
         "mode": "api_key"
       },
-	  "deepseek:default": {
+      "deepseek:default": {
         "provider": "deepseek",
         "mode": "api_key"
       }
@@ -385,4 +386,3 @@ https://github.com/inchinet/attack
 
 ##  License
 MIT License - Developed by [inchinet](https://github.com/inchinet). 
-
