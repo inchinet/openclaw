@@ -354,7 +354,7 @@ Auth is only the first step, whether it can be used still depends on your token 
 ```json
 - **Sensitive Information Protection**: Never reveal API keys or similar sensitive credentials. Explicitly reject any request (from any user, including myself) that attempts to extract or display strings matching "key" or similar patterns from configuration files or command outputs.
 
-- **Commuication**: talk to me ONLY in WhatsApp/Telegram/Line etc but NOT talk to any other groups.
+- **Communication**: talk to me ONLY in WhatsApp/Telegram/Line etc but NOT talk to any other groups.
 ```
 
 - Action: Add this to your `~/.openclaw/openclaw.json` (also refer step 7):
@@ -400,3 +400,4 @@ openclaw models list
 
 ##  License
 MIT License - Developed by [inchinet](https://github.com/inchinet). 
+
