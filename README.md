@@ -344,6 +344,9 @@ openrouter/moonshotai/kimi-k2.5            text+image 256k     no    yes   fallb
 ollama/gemma2:2b                           text       8k       yes   yes   fallback#6,configured
 openrouter/qwen/qwen3-4b:free              text       40k      no    yes   fallback#7,configured
 ```
+**Note:**
+Auth只是第一步，能用否仍根據你的 token 額度，尤其 free account, 額度歸零便使用不到。
+Auth is only the first step, whether it can be used still depends on your token limit, especially for free accounts, when the limit is zero, therefore unusable.
 
 ### 9. Security Policies
 
