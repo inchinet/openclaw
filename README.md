@@ -32,7 +32,7 @@ Type=simple
 User=ubuntu
 EnvironmentFile=/etc/openclaw.env
 # Injects secret keys from openclaw.env into the bot's config on every start
-ExecStartPre=/usr/bin/python3 -c "import os, json; p='/home/ubuntu/.openclaw/agents/main/agent/auth-profiles.json'; d=json.load(open(p)) if os.path.exists(p) else {'version':1,'profiles':{}}; [d['profiles'].update({f'{k}:default': {'type':'api_key', 'provider': k, 'key': os.getenv(f'{k.upper()}_API_KEY')}}) for k in ['google', 'openrouter'] if os.getenv(f'{k.upper()}_API_KEY')]; json.dump(d, open(p, 'w'), indent=2)"
+ExecStartPre=/usr/bin/python3 -c "import os, json; p='/home/ubuntu/.openclaw/agents/main/agent/auth-profiles.json'; d=json.load(open(p)) if os.path.exists(p) else {'version':1,'profiles':{}}; [d['profiles'].update({f'{k}:default': {'type':'api_key', 'provider': k, 'key': os.getenv(f'{k.upper()}_API_KEY')}}) for k in ['google'] if os.getenv(f'{k.upper()}_API_KEY')]; json.dump(d, open(p, 'w'), indent=2)"
 ExecStart=/usr/bin/openclaw gateway --port 18789
 Restart=on-failure
 Environment=NODE_ENV=production
@@ -48,18 +48,20 @@ This section covers API keys, file permissions, and firewall safety.
 Create `/etc/openclaw.env`:
 ```ini
 GOOGLE_API_KEY=your_actual_key
-OPENROUTER_API_KEY=your_actual_key
+
 ```
 
 ### B. Shell Access 
-If your `openclaw.json` uses placeholders like `${NVIDIA_API_KEY}`, and add them to ~\.openclaw\.env
+If your `openclaw.json` uses placeholders like `${NVIDIA_API_KEY}` etc, and add them to ~\.openclaw\.env
 ```bash
 touch ~\.openclaw\.env
 ```
 
 ```ini
-NVIDIA_API_KEY="your_actual_key"
-OLLAMA_API_KEY="ollama-local"
+NVIDIA_API_KEY=your_actual_key
+OPENROUTER_API_KEY=your_actual_key
+DEEPSEEK_API_KEY=your_actual_key
+OLLAMA_API_KEY=ollama-local
 ```
 
 ### C. Lockdown Permissions (Critical)
@@ -69,8 +71,9 @@ Always use `chmod 600` and strip Windows line endings:
 sudo sed -i 's/\r//' /etc/openclaw.env
 
 # Root env file
-sudo chown root:root /etc/openclaw.env
+sudo chown ubuntu:www-data /etc/openclaw.env
 sudo chmod 600 /etc/openclaw.env
+sudo chmod 640 /etc/systemd/system/openclaw.service
 
 # Agent auth profile
 chmod 600 ~/.openclaw/agents/main/agent/auth-profiles.json
@@ -157,7 +160,11 @@ In `~/.openclaw/openclaw.json`:
       "openrouter:default": {
         "provider": "openrouter",
         "mode": "api_key"
-      }
+      },
+	  "deepseek:default": {
+        "provider": "deepseek",
+        "mode": "api_key"
+      },
     }
   },
   "models": {
@@ -208,7 +215,43 @@ In `~/.openclaw/openclaw.json`:
             }
           }
         ]
-      }
+      },
+	    "deepseek": {
+        "baseUrl": "https://api.deepseek.com",
+	    "apiKey": "${DEEPSEEK_API_KEY}",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "deepseek-chat",
+            "name": "DeepSeek V3",
+			"reasoning": false,
+            "input": [ 
+              "text"
+            ],
+			"cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 64000,
+			"maxTokens": 81920
+		  },
+		  {
+			"id": "deepseek-reasoner",
+            "name": "DeepSeek R1",
+            "reasoning": true,
+			"cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 64000,
+			"maxTokens": 81920
+          }
+		 ]
+		}
     }
   },
   "agents": {
@@ -216,6 +259,8 @@ In `~/.openclaw/openclaw.json`:
       "model": {
         "primary": "google/gemini-2.5-flash",
         "fallbacks": [
+		  "deepseek/deepseek-chat",
+		  "deepseek/deepseek-reasoner",
 	      "openrouter/z-ai/glm-4.5-air:free",
           "nvidia/moonshotai/kimi-k2.5",
           "openrouter/moonshotai/kimi-k2.5",
@@ -225,6 +270,8 @@ In `~/.openclaw/openclaw.json`:
       },
       "models": {
 		"google/gemini-2.5-flash": {},
+		"deepseek/deepseek-chat": {},
+		"deepseek/deepseek-reasoner": {},		
 	    "openrouter/z-ai/glm-4.5-air:free": {},
         "nvidia/moonshotai/kimi-k2.5": {},
         "openrouter/moonshotai/kimi-k2.5": {},
@@ -288,11 +335,13 @@ Mine:
 ```ini
 Model                                      Input      Ctx      Local Auth  Tags
 google/gemini-2.5-flash                    text+image 1024k    no    yes   default,configured
-openrouter/z-ai/glm-4.5-air:free           text       128k     no    yes   fallback#1,configured
-nvidia/moonshotai/kimi-k2.5                text       250k     no    yes   fallback#2,configured
-openrouter/moonshotai/kimi-k2.5            text+image 256k     no    yes   fallback#3,configured
-ollama/gemma2:2b                           text       8k       yes   yes   fallback#4,configured
-openrouter/qwen/qwen3-4b:free              text       40k      no    yes   fallback#5,configured
+deepseek/deepseek-chat                     text       63k      no    yes   fallback#1,configured
+deepseek/deepseek-reasoner                 text       63k      no    yes   fallback#2,configured
+openrouter/z-ai/glm-4.5-air:free           text       128k     no    yes   fallback#3,configured
+nvidia/moonshotai/kimi-k2.5                text       250k     no    yes   fallback#4,configured
+openrouter/moonshotai/kimi-k2.5            text+image 256k     no    yes   fallback#5,configured
+ollama/gemma2:2b                           text       8k       yes   yes   fallback#6,configured
+openrouter/qwen/qwen3-4b:free              text       40k      no    yes   fallback#7,configured
 ```
 
 ### 9. Security Policies
