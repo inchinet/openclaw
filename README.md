@@ -23,9 +23,10 @@ openclaw onboard    # to configure
 ```
 
 ## 3. Run as a Service (Systemd)
-Create a service file to handle background execution and API key injection (note: 'type':'api_key' is needed).
-`sudo nano /etc/systemd/system/openclaw.service`
-
+Create a service file to handle background execution and API key injection (note: 'type':'api_key' is needed in ExecStartPre).
+```bash
+sudo nano /etc/systemd/system/openclaw.service
+```
 ```ini
 [Service]
 Type=simple
@@ -400,5 +401,6 @@ openclaw models list
 
 ##  License
 MIT License - Developed by [inchinet](https://github.com/inchinet). 
+
 
 
