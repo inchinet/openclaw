@@ -27,6 +27,7 @@ Create a service file to handle background execution and API key injection (note
 ```bash
 sudo nano /etc/systemd/system/openclaw.service
 ```
+
 ```ini
 [Service]
 Type=simple
@@ -53,9 +54,9 @@ GOOGLE_API_KEY=your_actual_key
 ```
 
 ### B. Shell Access 
-If your `openclaw.json` uses placeholders like `${NVIDIA_API_KEY}` etc, and add them to `~/.openclaw/.env`
+If your `openclaw.json` uses placeholders like `${NVIDIA_API_KEY}` etc, and add them to `~\.openclaw\.env`
 ```bash
-touch ~/.openclaw/.env
+touch ~\.openclaw\.env
 ```
 
 ```ini
@@ -140,7 +141,7 @@ curl http://localhost:11434/api/tags
 ps aux | grep ollama
 ```
 
-### 7. The openclaw.json configuration (for Google Gemini/Nvidia/Openrouter/Ollama LLMs)
+## 7. The openclaw.json configuration (for Google Gemini/Nvidia/Openrouter/Ollama LLMs)
 Without a GPU, avoid large models for Ollama (local LLM)
 - **Light Weight**: `gemma2:2b` (1.6GB) - Slower but manageable.
 - **Delete Heavy/Error Models**: `ollama rm llama3.1:8b mistral:7b qwen2:0.5b` (Prevents 400% CPU spikes).
@@ -349,7 +350,7 @@ openrouter/qwen/qwen3-4b:free              text       40k      no    yes   fallb
 Auth只是第一步，能用否仍根據你的 token 額度，尤其 free account, 額度歸零便使用不到。
 Auth is only the first step, whether it can be used still depends on your token limit, especially for free accounts, when the limit is zero, therefore unusable.
 
-### 9. Security Policies
+## 9. Security Policies
 
 - create ~\.openclaw\workspace\MEMORY.md:
 ```json
@@ -386,8 +387,22 @@ https://your-url?token=yourtoken
 https://github.com/inchinet/attack
 
 
-### 9. openclaw update
-To update openclaw to latest 
+## 10. openclaw update
+
+**Step 1: Backup Existing Version**
+Before updating, it is highly recommended to backup your current configuration and data.
+
+```bash
+# Backup the main configuration directory
+cp -r ~/.openclaw ~/.openclaw_backup_$(date +%Y%m%d)
+
+# Backup the environment variables file and service definition
+cp /etc/openclaw.env ~/openclaw.env_backup_$(date +%Y%m%d)
+cp /etc/systemd/system/openclaw.service ~/openclaw.service_backup_$(date +%Y%m%d)
+```
+
+**Step 2: Update openclaw**
+To update openclaw to the latest version:
 ```bash
 sudo systemctl stop openclaw
 sudo npm i -g openclaw@latest
@@ -401,6 +416,3 @@ openclaw models list
 
 ##  License
 MIT License - Developed by [inchinet](https://github.com/inchinet). 
-
-
-
