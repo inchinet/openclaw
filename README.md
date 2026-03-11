@@ -387,7 +387,7 @@ https://your-url?token=yourtoken
 https://github.com/inchinet/attack
 
 
-## 10. openclaw update
+## 10. Openclaw update
 
 **Step 1: Backup Existing Version**
 Before updating, it is highly recommended to backup your current configuration and data.
@@ -410,6 +410,23 @@ sudo systemctl restart openclaw
 openclaw models list
 ```
 
+## 11. To stop it
+If need stop Openclaw, the running process:
+
+```bash
+sudo systemctl stop openclaw
+```
+Prevent it from starting on boot:
+
+```bash
+sudo systemctl disable openclaw
+```
+
+You can verify if it's still set to start on boot by running:
+```bash
+systemctl is-enabled openclaw
+```
+If it says disabled, it will not start after a reboot.
 
 ---
 **Note:** Always verify your outbound IPv4 with `curl ifconfig.me` and ensure it matches your Google Cloud API whitelist.
