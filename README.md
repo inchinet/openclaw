@@ -385,7 +385,7 @@ https://your-url?token=yourtoken
 
 - **Warning on API Key Hardcoding**: If OpenClaw "self-corrects" or updates its own configuration (e.g., via a sub-agent), it may replace environment variable placeholders like `${DEEPSEEK_API_KEY}` with actual hardcoded keys. Always verify `openclaw.json` and revert these to original `${VAR}` placeholders to maintain security.
 
-- **Group Policy Enforcement**: To ensure the bot never replies to groups, besides setting `"groupPolicy": "disabled"` in `openclaw.json`, maintain a `memory.md` (located at `Z:\antigravity\openclaw\memory.md`) with the explicit instruction: *Communication: talk to me ONLY in WhatsApp/Telegram/Line etc but NOT talk to any other groups.*
+- **Group Policy Enforcement**: To ensure the bot never replies to groups, besides setting `"groupPolicy": "disabled"` in `openclaw.json`, maintain a `memory.md` with the explicit instruction: *Communication: talk to me ONLY in WhatsApp/Telegram/Line etc but NOT talk to any other groups.*
 
 ```json
 "channels": {
@@ -478,3 +478,4 @@ openclaw status
 
 ##  License
 MIT License - Developed by [inchinet](https://github.com/inchinet). 
+
