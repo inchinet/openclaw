@@ -383,9 +383,27 @@ openclaw devices approve <DEVICE_ID> (pending one)
 https://your-url?token=yourtoken
 
 
-- To monitor and prevent internet attack, please refer:
-https://github.com/inchinet/attack
+- **Warning on API Key Hardcoding**: If OpenClaw "self-corrects" or updates its own configuration (e.g., via a sub-agent), it may replace environment variable placeholders like `${DEEPSEEK_API_KEY}` with actual hardcoded keys. Always verify `openclaw.json` and revert these to original `${VAR}` placeholders to maintain security.
 
+- **Group Policy Enforcement**: To ensure the bot never replies to groups, besides setting `"groupPolicy": "disabled"` in `openclaw.json`, maintain a `memory.md` (located at `Z:\antigravity\openclaw\memory.md`) with the explicit instruction: *Communication: talk to me ONLY in WhatsApp/Telegram/Line etc but NOT talk to any other groups.*
+
+```json
+"channels": {
+  "whatsapp": {
+    "dmPolicy": "allowlist",
+    "selfChatMode": true,
+    "allowFrom": [
+      "+85298765432"
+    ],
+    "groupPolicy": "disabled", // This is explicitly set here
+    "mediaMaxMb": 50,
+    "debounceMs": 0
+  }
+}
+
+```
+
+---
 
 ## 10. Openclaw update
 
