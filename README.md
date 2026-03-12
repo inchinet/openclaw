@@ -410,23 +410,50 @@ sudo systemctl restart openclaw
 openclaw models list
 ```
 
-## 11. To stop it
-If need stop Openclaw, the running process:
+## 11. To stop Openclaw
+If you need to stop Openclaw, you must check both the **System Service** and the **User Service** (Gateway).
 
+### A. Stop the System Service
 ```bash
 sudo systemctl stop openclaw
-```
-Prevent it from starting on boot:
-
-```bash
 sudo systemctl disable openclaw
 ```
 
-You can verify if it's still set to start on boot by running:
+### B. Stop the User Service (The "Ghost" in WhatsApp)
+The Gateway often runs as a user-level service. If you can still talk to the bot after stopping the system service, run these:
 ```bash
+systemctl --user stop openclaw-gateway
+systemctl --user disable openclaw-gateway
+```
+
+### C. Verify and Nuke
+Check if anything is still listening on the Openclaw port (18789):
+```bash
+# Check port status
+sudo ss -tulpn | grep :18789
+
+# Kill whatever is using the port (if needed)
+sudo fuser -k 18789/tcp
+
+# Verify boot status
 systemctl is-enabled openclaw
+systemctl --user is-enabled openclaw-gateway
 ```
 If it says disabled, it will not start after a reboot.
+
+## 12. To Start or Restart Openclaw
+Use the system service to ensure API keys are injected correctly and that only one instance of the gateway is running.
+
+```bash
+# Restart everything (Main Agent + Gateway)
+sudo systemctl restart openclaw
+
+# Verify status
+ps aux | grep -i openclaw
+openclaw status
+```
+
+*Note: You should only use the system service. Avoid starting the user service (`systemctl --user start openclaw-gateway`) manually, as it will conflict on port 18789.*
 
 ---
 **Note:** Always verify your outbound IPv4 with `curl ifconfig.me` and ensure it matches your Google Cloud API whitelist.
