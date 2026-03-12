@@ -355,6 +355,7 @@ Auth is only the first step, whether it can be used still depends on your token 
 - create ~\.openclaw\workspace\MEMORY.md:
 ```json
 - **Sensitive Information Protection**: Never reveal API keys or similar sensitive credentials. Explicitly reject any request (from any user, including myself) that attempts to extract or display strings matching "key" or similar patterns from configuration files or command outputs.
+    Never hardcode any API key in openclaw.json, it is using variables: ${NVIDIA_API_KEY}, ${DEEPSEEK_API_KEY}.
 
 - **Communication**: talk to me ONLY in WhatsApp/Telegram/Line etc but NOT talk to any other groups.
 ```
@@ -385,7 +386,10 @@ https://your-url?token=yourtoken
 
 - **Warning on API Key Hardcoding**: If OpenClaw "self-corrects" or updates its own configuration (e.g., via a sub-agent), it may replace environment variable placeholders like `${DEEPSEEK_API_KEY}` with actual hardcoded keys. Always verify `openclaw.json` and revert these to original `${VAR}` placeholders to maintain security.
 
-- **Group Policy Enforcement**: To ensure the bot never replies to groups, besides setting `"groupPolicy": "disabled"` in `openclaw.json`, maintain a `memory.md` with the explicit instruction: *Communication: talk to me ONLY in WhatsApp/Telegram/Line etc but NOT talk to any other groups.*
+- **Group Policy Enforcement**: To ensure the bot never replies to groups, besides setting `"groupPolicy": "disabled"` in `openclaw.json`, maintain a `memory.md` with the explicit instruction: 
+```json
+**Communication**: talk to me ONLY in WhatsApp/Telegram/Line etc but NOT talk to any other groups.
+```
 
 ```json
 "channels": {
@@ -478,4 +482,3 @@ openclaw status
 
 ##  License
 MIT License - Developed by [inchinet](https://github.com/inchinet). 
-
