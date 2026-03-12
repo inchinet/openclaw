@@ -432,7 +432,7 @@ sudo systemctl restart openclaw
 openclaw models list
 ```
 
-## 11. To stop Openclaw
+## 11. To Stop Openclaw
 If you need to stop Openclaw, you must check both the **System Service** and the **User Service** (Gateway).
 
 ### A. Stop the System Service
@@ -463,7 +463,54 @@ systemctl --user is-enabled openclaw-gateway
 ```
 If it says disabled, it will not start after a reboot.
 
+### D. Can consider when not use
+If you are worried about plain-text API keys sitting in your files while the service is stopped, you can encrypt them and scrub hisotry:
+
+**1. Encrypt Environment Files**
+```bash
+# To encrypt ~/.openclaw/.env (need passphrase)
+gpg -c ~/.openclaw/.env 
+# This creates .env.gpg (you can then delete the plain .env)
+
+# To decrypt when restarting (need passphrase)
+gpg -o ~/.openclaw/.env -d ~/.openclaw/.env.gpg
+
+# To encrypt /etc/openclaw.env
+sudo gpg -c /etc/openclaw.env
+# To decrypt
+sudo gpg -o /etc/openclaw.env -d /etc/openclaw.env.gpg
+```
+
+**2. Scrub Leaked Keys from Files/Logs**
+Openclaw often leaks keys in various files:
+
+```bash
+# Delete these 2 files in ~/.openclaw/agents/main/agent/
+rm -rf ~/.openclaw/agents/main/agent/auth-profiles.json
+rm -rf ~/.openclaw/agents/main/agent/models.json
+```
+
+Openclaw often leaks keys also into session history:
+```bash
+# Delete all session logs:
+rm -rf ~/.openclaw/agents/main/sessions/*
+
+# Check for other logs (Check the logs folder too):
+rm -rf ~/.openclaw/logs/*
+```
+
+**3. Search for Remaining Keys**
+```bash
+# search whole folder for key patterns
+grep -rE "sk-or-v1-|nvapi-|AIzaSy|sk-[a-f0-9]{32}" ~/.openclaw --exclude=*.gpg
+
+# search for anything containing "api-key"
+grep -rEi "api[-_]?key" ~/.openclaw --exclude=*.gpg
+```
+
 ## 12. To Start or Restart Openclaw
+Decrpt files in step 11: `.env `, `openclaw.env`.
+
 Use the system service to ensure API keys are injected correctly and that only one instance of the gateway is running.
 
 ```bash
