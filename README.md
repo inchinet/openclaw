@@ -464,7 +464,7 @@ systemctl --user is-enabled openclaw-gateway
 If it says disabled, it will not start after a reboot.
 
 ### D. Can consider when not use
-If you are worried about plain-text API keys sitting in your files while the service is stopped, you can encrypt them and scrub hisotry:
+If you are worried about plain-text API keys sitting in your files while the service is stopped, you can encrypt them and scrub history:
 
 **1. Encrypt Environment Files**
 ```bash
@@ -519,7 +519,7 @@ grep -rEi "api[-_]?key" ~/.openclaw --exclude=*.gpg
 ```
 
 ## 12. To Start or Restart Openclaw
-Decrpt files in step 11: `.env `, `openclaw.env`.
+Decrypt files in step 11: `.env `, `openclaw.env`.
 
 Use the system service to ensure API keys are injected correctly and that only one instance of the gateway is running.
 
@@ -539,3 +539,4 @@ openclaw status
 
 ##  License
 MIT License - Developed by [inchinet](https://github.com/inchinet). 
+
