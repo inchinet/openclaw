@@ -503,7 +503,17 @@ rm -rf ~/.openclaw/logs/*
 ```bash
 # search whole folder for key patterns
 grep -rE "sk-or-v1-|nvapi-|AIzaSy|sk-[a-f0-9]{32}" ~/.openclaw --exclude=*.gpg
+```
 
+#### Regex Breakdown
+| Pattern | Target Service |
+| :--- | :--- |
+| `sk-or-v1-` | **OpenRouter** |
+| `nvapi-` | **NVIDIA AI** |
+| `AIzaSy` | **Google (Cloud/Maps/YouTube)** |
+| `sk-[a-f0-9]{32}` | **Legacy OpenAI / Generic** |
+
+```bash
 # search for anything containing "api-key"
 grep -rEi "api[-_]?key" ~/.openclaw --exclude=*.gpg
 ```
